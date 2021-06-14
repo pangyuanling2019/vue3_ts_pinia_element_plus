@@ -42,6 +42,7 @@ export const usePermissionStore = defineStore({
       this.asyncRoutes.push(routes);
     },
     async changeSetting() {
+      // debugger;
       let name = storageSession.getItem("info")?.username;
       await getAsyncRoutes({ name }).then(({ info }) => {
         if (info.length === 0) {

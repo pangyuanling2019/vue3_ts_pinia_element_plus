@@ -32,21 +32,23 @@ export const constantRoutesArr = ascending(constantRoutes).concat(
 const router = createRouter({
   history: createWebHashHistory(),
   routes: ascending(constantRoutes).concat(...remainingRouter),
-  scrollBehavior(to, from, savedPosition) {
-    return new Promise((resolve, reject) => {
-      if (savedPosition) {
-        return savedPosition;
-      } else {
-        if (from.meta.saveSrollTop) {
-          const top: number =
-            document.documentElement.scrollTop || document.body.scrollTop;
-          resolve({ left: 0, top });
-        }
-      }
-    });
-  },
+  // scrollBehavior(to, from, savedPosition) {
+  //   // console.log(to, from, savedPosition)
+  //   return new Promise((resolve, reject) => {
+  //     if (savedPosition) {
+  //       return savedPosition;
+  //     } else {
+  //       if (from.meta.saveSrollTop) {
+  //         const top: number =
+  //           document.documentElement.scrollTop || document.body.scrollTop;
+  //         resolve({ left: 0, top });
+  //       }
+  //     }
+  //   });
+  // },
 });
 
+console.log(router,constantRoutesArr)
 import NProgress from "../utils/progress";
 
 const whiteList = ["/login", "/register"];
@@ -54,9 +56,9 @@ const whiteList = ["/login", "/register"];
 router.beforeEach((to, _from, next) => {
   // _from?.name;
   let name = storageSession.getItem("info");
-  if (name) {
-    usePermissionStoreHook().changeSetting();
-  }
+  // if (name) {
+  //   usePermissionStoreHook().changeSetting();
+  // }
   // NProgress.start();
   const { t } = i18n.global;
   // @ts-ignore

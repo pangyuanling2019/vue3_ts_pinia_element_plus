@@ -11,7 +11,7 @@
         @select="menuSelect"
       >
         <sidebar-item
-          v-for="route in routeStore.wholeRoutes"
+          v-for="route in routeStore"
           :key="route.path"
           :item="route"
           :base-path="route.path"
@@ -39,13 +39,12 @@ import { emitter } from "/@/utils/mitt";
 import Logo from "./Logo.vue";
 import { storageLocal } from "/@/utils/storage";
 import { usePermissionStoreHook } from "/@/store/modules/permission";
-
+import { constantRoutesArr } from "/@/router/index";
 export default defineComponent({
   name: "sidebar",
   components: { SidebarItem, Logo },
   setup() {
     const routeStore = usePermissionStoreHook();
-
     const router = useRouter().options.routes;
 
     const pureApp = useAppStoreHook();
@@ -96,7 +95,9 @@ export default defineComponent({
       isCollapse: computed(() => !pureApp.getSidebarStatus),
       menuSelect,
       showLogo,
-      routeStore
+      routeStore: computed(() =>
+        constantRoutesArr.filter(item => item.meta.showLink)
+      )
     };
   }
 });

@@ -1,5 +1,5 @@
 export default {
-  title: "PureAdmin",
+  title: "admin",
 
   fixedHeader: false,
 

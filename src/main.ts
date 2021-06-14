@@ -14,46 +14,12 @@ import "./assets/iconfont/iconfont.js";
 import "./assets/iconfont/iconfont.css";
 
 
-import { setConfig, getConfig } from "./config";
-import axios from "axios";
-
 const app = createApp(App);
-app.config.globalProperties.$config = getConfig();
 
-// 获取项目动态全局配置
-export const getServerConfig = async (): Promise<any> => {
-  return axios({
-    baseURL: "",
-    method: "get",
-    url:
-      process.env.NODE_ENV === "production"
-        ? "/manages/serverConfig.json"
-        : "/serverConfig.json",
-  })
-    .then(({ data: config }) => {
-      let $config = app.config.globalProperties.$config;
-      // 自动注入项目配置
-      if (app && $config && typeof config === "object") {
-        $config = Object.assign($config, config);
-        app.config.globalProperties.$config = $config;
-        // 设置全局配置
-        setConfig($config);
-      }
-      // 设置全局baseURL
-      app.config.globalProperties.$baseUrl = $config.baseURL;
-      return $config;
-    })
-    .catch(() => {
-      throw "请在public文件夹下添加serverConfig.json配置文件";
-    });
-};
+setupStore(app);
 
-getServerConfig().then(async () => {
-  setupStore(app);
+app.use(router).use(useElementPlus).use(useTable).use(usI18n);
 
-  app.use(router).use(useElementPlus).use(useTable).use(usI18n);
+router.isReady();
 
-  await router.isReady();
-
-  app.mount("#app");
-});
+app.mount("#app");
