@@ -12,16 +12,16 @@ const remainingRouter = [
       rank: 101,
     },
   },
-  {
-    path: "/register",
-    name: "register",
-    component: () => import("/@/views/register.vue"),
-    meta: {
-      title: "message.hsregister",
-      showLink: false,
-      rank: 102,
-    },
-  },
+  // {
+  //   path: "/register",
+  //   name: "register",
+  //   component: () => import("/@/views/register.vue"),
+  //   meta: {
+  //     title: "message.hsregister",
+  //     showLink: false,
+  //     rank: 102,
+  //   },
+  // },
   {
     // 找不到路由重定向到404页面
     path: "/:pathMatch(.*)",
