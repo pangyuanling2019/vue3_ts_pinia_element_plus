@@ -7,9 +7,9 @@ interface RouteModel {
 export const homeRoute: RouteModel = {
   path: "/home",
   meta: {
-    title: "message.hshome",
+    title: "首页",
     icon: "el-icon-s-home",
     showLink: true,
-    savedPosition: false,
+     
   },
 };

@@ -29,19 +29,19 @@ export default {
         buttons: [
           {
             code: "insert_actived",
-            name: "message.hsadd",
+            name: "新增",
             status: "perfect",
             icon: "fa fa-plus"
           },
           {
             code: "mark_cancel",
-            name: "message.hsmark",
+            name: "标记/取消",
             status: "perfect",
             icon: "fa fa-trash-o"
           },
           {
             code: "save",
-            name: "message.hssave",
+            name: "保存",
             status: "perfect",
             icon: "fa fa-save"
           }

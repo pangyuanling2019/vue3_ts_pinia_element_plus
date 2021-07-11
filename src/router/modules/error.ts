@@ -7,9 +7,9 @@ const errorRouter = {
   redirect: "/error/401",
   meta: {
     icon: "el-icon-position",
-    title: "message.hserror",
-    showLink: true,
-    savedPosition: true,
+    title: "错误页面",
+    showLink: false,
+     
     rank: 7,
   },
   children: [
@@ -18,9 +18,9 @@ const errorRouter = {
       name: "401",
       component: () => import("/@/views/error/401.vue"),
       meta: {
-        title: "message.hsfourZeroOne",
-        showLink: true,
-        savedPosition: true,
+        title: "401",
+        showLink: false,
+         
       },
     },
     {
@@ -28,9 +28,9 @@ const errorRouter = {
       name: "404",
       component: () => import("/@/views/error/404.vue"),
       meta: {
-        title: "message.hsfourZeroFour",
-        showLink: true,
-        savedPosition: true,
+        title: "404",
+        showLink: false,
+         
       },
     },
   ],

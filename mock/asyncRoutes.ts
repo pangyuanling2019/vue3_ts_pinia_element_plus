@@ -9,9 +9,9 @@ const systemRouter = {
   redirect: "/system/user",
   meta: {
     icon: "el-icon-setting",
-    title: "message.hssysManagement",
+    title: "系统管理",
     showLink: true,
-    savedPosition: true,
+     
     rank: 6,
   },
   children: [
@@ -20,9 +20,9 @@ const systemRouter = {
       name: "user",
       // component: () => import("/@/views/system/user/index.vue"),
       meta: {
-        title: "message.hsBaseinfo",
+        title: "基础信息",
         showLink: true,
-        savedPosition: true,
+         
       },
     },
     {
@@ -30,9 +30,9 @@ const systemRouter = {
       name: "dict",
       // component: () => import("/@/views/system/dict/index.vue"),
       meta: {
-        title: "message.hsDict",
+        title: "字典管理",
         showLink: true,
-        savedPosition: true,
+         
       },
     },
   ],

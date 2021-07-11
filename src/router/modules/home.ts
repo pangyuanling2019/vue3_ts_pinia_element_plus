@@ -8,7 +8,7 @@ const homeRouter = {
   meta: {
     icon: "el-icon-s-home",
     showLink: true,
-    savedPosition: false,
+     
     rank: 0,
   },
   children: [
@@ -17,9 +17,9 @@ const homeRouter = {
       name: "home",
       component: () => import("/@/views/home/index.vue"),
       meta: {
-        title: "message.hshome",
+        title: "首页",
         showLink: true,
-        savedPosition: false,
+         
       },
     },
   ],

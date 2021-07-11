@@ -6,10 +6,10 @@ const nestedRouter = {
   redirect: "/nested/menu1/menu1-1",
   name: "Nested",
   meta: {
-    title: "message.hsmenus",
+    title: "多级菜单",
     icon: "el-icon-s-data",
     showLink: true,
-    savedPosition: false,
+
     rank: 5,
   },
   children: [
@@ -18,9 +18,9 @@ const nestedRouter = {
       component: () => import("/@/views/nested/menu1/index.vue"),
       name: "Menu1",
       meta: {
-        title: "message.hsmenu1",
+        title: "菜单1",
         showLink: true,
-        savedPosition: false,
+
       },
       redirect: "/nested/menu1/menu1-1",
       children: [
@@ -29,9 +29,9 @@ const nestedRouter = {
           component: () => import("/@/views/nested/menu1/menu1-1/index.vue"),
           name: "Menu1-1",
           meta: {
-            title: "message.hsmenu1-1",
+            title: "菜单1-1",
             showLink: true,
-            savedPosition: false,
+
           },
         },
         {
@@ -40,9 +40,9 @@ const nestedRouter = {
           name: "Menu1-2",
           redirect: "/nested/menu1/menu1-2/menu1-2-1",
           meta: {
-            title: "message.hsmenu1-2",
+            title: "菜单1-2",
             showLink: true,
-            savedPosition: false,
+
           },
           children: [
             {
@@ -51,9 +51,9 @@ const nestedRouter = {
                 import("/@/views/nested/menu1/menu1-2/menu1-2-1/index.vue"),
               name: "Menu1-2-1",
               meta: {
-                title: "message.hsmenu1-2-1",
+                title: "菜单1-2-1",
                 showLink: true,
-                savedPosition: false,
+
               },
             },
             {
@@ -62,9 +62,9 @@ const nestedRouter = {
                 import("/@/views/nested/menu1/menu1-2/menu1-2-2/index.vue"),
               name: "Menu1-2-2",
               meta: {
-                title: "message.hsmenu1-2-2",
+                title: "菜单1-2-2",
                 showLink: true,
-                savedPosition: false,
+
               },
             },
           ],
@@ -74,9 +74,9 @@ const nestedRouter = {
           component: () => import("/@/views/nested/menu1/menu1-3/index.vue"),
           name: "Menu1-3",
           meta: {
-            title: "message.hsmenu1-3",
+            title: "菜单1-3",
             showLink: true,
-            savedPosition: false,
+
           },
         },
       ],
@@ -86,9 +86,9 @@ const nestedRouter = {
       name: "Menu2",
       component: () => import("/@/views/nested/menu2/index.vue"),
       meta: {
-        title: "message.hsmenu2",
+        title: "菜单2",
         showLink: true,
-        savedPosition: false,
+
       },
     },
   ],

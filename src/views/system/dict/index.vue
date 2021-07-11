@@ -3,24 +3,24 @@
     <!-- 工具栏 -->
     <vxe-toolbar>
       <template #buttons>
-        <vxe-input v-model="filterName" :placeholder="$t('message.hssearch')" @keyup="searchEvent"></vxe-input>
+        <vxe-input v-model="filterName" placeholder="搜索" @keyup="searchEvent"></vxe-input>
       </template>
       <template #tools>
         <vxe-button
           icon="el-icon-circle-plus-outline"
           status="primary"
           @click="onAdd"
-        >{{$t('message.hsadd')}}</vxe-button>
+        >新增</vxe-button>
         <vxe-button
           icon="el-icon-folder-opened"
           status="primary"
           @click="$refs.xTree.setAllTreeExpand(true)"
-        >{{$t('message.hsexpendAll')}}</vxe-button>
+        >全部展开</vxe-button>
         <vxe-button
           icon="el-icon-folder"
           status="primary"
           @click="$refs.xTree.clearTreeExpand()"
-        >{{$t('message.hscollapseAll')}}</vxe-button>
+        >全部折叠</vxe-button>
       </template>
     </vxe-toolbar>
 

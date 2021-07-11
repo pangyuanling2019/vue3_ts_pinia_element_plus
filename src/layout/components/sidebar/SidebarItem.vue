@@ -14,7 +14,7 @@
         >
           <i :class="onlyOneChild.meta.icon || (item.meta && item.meta.icon)" />
           <template #title>
-            <span>{{ $t(onlyOneChild.meta.title) }}</span>
+            <span>{{ onlyOneChild.meta.title }}</span>
           </template>
         </el-menu-item>
       </app-link>
@@ -23,7 +23,7 @@
     <el-submenu v-else ref="subMenu" :index="resolvePath(item.path)" popper-append-to-body>
       <template #title>
         <i :class="item.meta.icon"></i>
-        <span>{{ $t(item.meta.title) }}</span>
+        <span>{{ item.meta.title}}</span>
       </template>
       <sidebar-item
         v-for="child in item.children"

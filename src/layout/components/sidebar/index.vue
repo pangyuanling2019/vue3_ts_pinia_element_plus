@@ -38,13 +38,14 @@ import { useDynamicRoutesHook } from "../tag/tagsHook";
 import { emitter } from "/@/utils/mitt";
 import Logo from "./Logo.vue";
 import { storageLocal } from "/@/utils/storage";
-import { usePermissionStoreHook } from "/@/store/modules/permission";
 import { constantRoutesArr } from "/@/router/index";
 export default defineComponent({
   name: "sidebar",
   components: { SidebarItem, Logo },
   setup() {
-    const routeStore = usePermissionStoreHook();
+    const routeStore = computed(() =>
+      constantRoutesArr.filter(item => item.meta.showLink)
+    );
     const router = useRouter().options.routes;
 
     const pureApp = useAppStoreHook();
@@ -95,9 +96,7 @@ export default defineComponent({
       isCollapse: computed(() => !pureApp.getSidebarStatus),
       menuSelect,
       showLogo,
-      routeStore: computed(() =>
-        constantRoutesArr.filter(item => item.meta.showLink)
-      )
+      routeStore
     };
   }
 });

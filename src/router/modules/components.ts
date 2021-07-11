@@ -4,12 +4,12 @@ const componentsRouter = {
   path: "/components",
   name: "components",
   component: Layout,
-  redirect: "/components/split-pane",
+  redirect: "/components/draggable",
   meta: {
     icon: "el-icon-menu",
-    title: "message.hscomponents",
+    title: "组件",
     showLink: true,
-    savedPosition: true,
+     
     rank: 4,
   },
   children: [
@@ -18,19 +18,19 @@ const componentsRouter = {
       name: "draggable",
       component: () => import("/@/views/components/draggable/index.vue"),
       meta: {
-        title: "message.hsdraggable",
+        title: "拖拽组件",
         showLink: true,
-        savedPosition: true,
+         
       },
     },
     {
-      path: "/components/countTo",
+      path: "/components/countTo", 
       name: "countTo",
       component: () => import("/@/views/components/count-to/index.vue"),
       meta: {
-        title: "message.hscountTo",
+        title: "数字动画",
         showLink: true,
-        savedPosition: true,
+         
       },
     }
   ],

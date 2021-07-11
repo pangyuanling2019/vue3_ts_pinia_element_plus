@@ -43,7 +43,7 @@
                 @change="changeAllEvent"
               ></vxe-checkbox>
               <span class="select-count">已选中{{ selectRecords.length }}条</span>
-              <vxe-button size="small">{{ $t("message.hsdelete") }}</vxe-button>
+              <vxe-button size="small">删除</vxe-button>
             </span>
           </template>
         </vxe-pager>

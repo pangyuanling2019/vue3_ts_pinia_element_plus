@@ -38,7 +38,7 @@ export const menusConfig = {
       "hsmenu1-2-2": "菜单1-2-2",
       "hsmenu1-3": "菜单1-3",
       hsmenu2: "菜单2",
-      permission: "权限管理",
+      permission: "权限管理", 
       permissionPage: "页面权限",
       permissionButton: "按钮权限",
     },
@@ -84,10 +84,6 @@ export const menusConfig = {
 export const buttonConfig = {
   zh: {
     message: {
-      hsLoginOut: "退出系统",
-      hsfullscreen: "全屏",
-      hsexitfullscreen: "退出全屏",
-      hsrefreshRoute: "刷新路由",
       hslogin: "登陆",
       hsregister: "注册",
       hsadd: "新增",
@@ -96,7 +92,6 @@ export const buttonConfig = {
       hssearch: "搜索",
       hsexpendAll: "全部展开",
       hscollapseAll: "全部折叠",
-      hssystemSet: "系统设置",
       hsdelete: "删除",
     },
   },

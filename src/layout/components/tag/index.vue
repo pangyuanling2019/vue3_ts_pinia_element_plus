@@ -10,7 +10,7 @@
         @mouseenter.prevent="onMouseenter(item, index)"
         @mouseleave.prevent="onMouseleave(item, index)"
       >
-        <router-link :to="item.path">{{ $t(item.meta.title) }}</router-link>
+        <router-link :to="item.path">{{ item.meta.title }}</router-link>
         <i
           v-if="$route.path === item.path && index !== 0 || index === activeIndex && index !== 0"
           class="iconfont team-iconshanchu"
@@ -42,7 +42,7 @@
     <ul class="right-button">
       <li>
         <i
-          :title="$t('message.hsrefreshRoute')"
+          title="刷新路由"
           class="el-icon-refresh-right rotate"
           @click="onFresh"
         ></i>
