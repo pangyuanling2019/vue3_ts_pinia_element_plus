@@ -1,23 +1,31 @@
 <template>
-  <div :class="{'has-logo': showLogo}">
-    <Logo v-if="showLogo === '1'" :collapse="isCollapse" />
-    <el-scrollbar wrap-class="scrollbar-wrapper">
-      <el-menu
-        :default-active="activeMenu"
-        :collapse="isCollapse"
-        unique-opened
-        :collapse-transition="false"
-        mode="vertical"
-        @select="menuSelect"
-      >
-        <sidebar-item
+  <div :style="{width:collapsed? '226px':'70px'}">
+    <div class="fixed-menu">
+      <el-scrollbar wrap-class="scrollbar-fixed-wrapper">
+        <div
           v-for="route in routeStore"
           :key="route.path"
-          :item="route"
-          :base-path="route.path"
-        />
-      </el-menu>
-    </el-scrollbar>
+          :class="[route.path === menuActive?'fixed-menu-item fixed-menu-item-active':'fixed-menu-item']"
+          @click="handleSelectMenu(route)"
+        >
+          <i class="iconfont team-iconexit-fullscreen"></i>
+          <span class="fixed-menu-item-name">{{route.meta.title}}</span>
+        </div>
+      </el-scrollbar>
+    </div>
+
+    <div class="fixed-subMenu">
+      <el-scrollbar wrap-class="scrollbar-wrapper">
+        <div
+          v-for="item in subMenuChild"
+          :key="item.path"
+          :class="[item.path === activeSubMenu?'fixed-subMenu-item fixed-subMenu-item-active':'fixed-subMenu-item']"
+          @click="handleSelectSubMenu(item)"
+        >
+          <span>{{item.meta.title}}</span>
+        </div>
+      </el-scrollbar>
+    </div>
   </div>
 </template>
 
@@ -26,35 +34,78 @@ import {
   computed,
   defineComponent,
   ref,
+  reactive,
   unref,
   nextTick,
-  onBeforeMount
+  onBeforeMount,
+  watch
 } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import { useAppStoreHook } from "/@/store/modules/app";
-import SidebarItem from "./SidebarItem.vue";
 import { algorithm } from "../../../utils/algorithm";
 import { useDynamicRoutesHook } from "../tag/tagsHook";
 import { emitter } from "/@/utils/mitt";
-import Logo from "./Logo.vue";
-import { storageLocal } from "/@/utils/storage";
 import { constantRoutesArr } from "/@/router/index";
+import { useGlobalModel } from "/@/store/modules/globalModel";
+import { toRefs } from "@vueuse/core";
+
 export default defineComponent({
   name: "sidebar",
-  components: { SidebarItem, Logo },
   setup() {
-    const routeStore = computed(() =>
+    const router = useRouter();
+    const route = useRoute();
+    const globalModel = useGlobalModel();
+    //动态修改tags
+    const { dynamicRouteTags } = useDynamicRoutesHook();
+
+    //过滤掉不需要显示的route
+    const routeStore = computed<any[]>(() =>
       constantRoutesArr.filter(item => item.meta.showLink)
     );
-    const router = useRouter().options.routes;
 
-    const pureApp = useAppStoreHook();
+    //默认选中首页
+    const menuActive = ref<string>("/home");
 
-    const route = useRoute();
+    //记录选中的子路由
+    const subMenuRoute = reactive({
+      subMenuChild: []
+    });
 
-    const showLogo = ref(storageLocal.getItem("logoVal") || "1");
+    const toggleMenu = (bool: boolean) => {
+      globalModel.toggleMenu(bool);
+    };
 
-    const activeMenu = computed(() => {
+    /**
+     *menu事件, 有子路由展示子路由， 没有跳转路由
+     *1.没有子路由关闭子路由弹框  2.点击同一个 切换子路由弹框
+     */
+    const handleSelectMenu = route => {
+      if (route.children && route.children.length > 1) {
+        toggleMenu(
+          menuActive.value === route.path ? !globalModel.getCollapsed : true
+        );
+        subMenuRoute.subMenuChild = route.children.filter(
+          item => item.meta.showLink
+        );
+      } else {
+        router.push({
+          path: route.redirect ?? route.path
+        });
+        dynamicRouteTags(route.redirect ?? route.path, route.meta.parentPath, route);
+        toggleMenu(false);
+      }
+      menuActive.value = route.path;
+    };
+
+    //subMenu事件，子路由跳转
+    const handleSelectSubMenu = item => {
+      router.push({
+        path: item.path
+      });
+      dynamicRouteTags(item.path, item.meta.parentPath, item);
+    };
+
+    //计算路由变化， 回显选中的二级菜单
+    const activeSubMenu = computed(() => {
       const { meta, path } = route;
       if (meta.activeMenu) {
         return meta.activeMenu;
@@ -62,41 +113,38 @@ export default defineComponent({
       return path;
     });
 
-    const { dynamicRouteTags } = useDynamicRoutesHook();
-
-    const menuSelect = (indexPath: string): void => {
-      let parentPath = "";
-      let parentPathIndex = indexPath.lastIndexOf("/");
-      if (parentPathIndex > 0) {
-        parentPath = indexPath.slice(0, parentPathIndex);
-      }
-      // 找到当前路由的信息
-      function findCurrentRoute(routes) {
-        return routes.map((item, key) => {
-          if (item.path === indexPath) {
-            dynamicRouteTags(indexPath, parentPath, item);
-          } else {
-            if (item.children) findCurrentRoute(item.children);
+    //监听路由变化，回显选中的一级menu， 在弹框展开的情况下回显子路由
+    watch(
+      () => route.meta,
+      (routeMeta, prevRouteMeta) => {
+        if (routeMeta.parentPath) {
+          if (globalModel.collapsed) {
+            let findRouteChild = routeStore.value.find(
+              item => item.path === routeMeta.parentPath
+            );
+            subMenuRoute.subMenuChild = findRouteChild
+              ? findRouteChild.children.filter(item => item.meta.showLink)
+              : [];
           }
-        });
-        return;
+          menuActive.value = routeMeta.parentPath as string;
+        }
       }
-      findCurrentRoute(algorithm.increaseIndexes(router));
-      emitter.emit("changLayoutRoute", indexPath);
-    };
+    );
 
+    //页面刷新 拿route  回显
     onBeforeMount(() => {
-      emitter.on("logoChange", key => {
-        showLogo.value = key;
-      });
+      menuActive.value = route.meta.parentPath as string;
     });
 
     return {
-      activeMenu,
-      isCollapse: computed(() => !pureApp.getSidebarStatus),
-      menuSelect,
-      showLogo,
-      routeStore
+      ...toRefs(subMenuRoute),
+      collapsed: computed(() => globalModel.getCollapsed),
+      routeStore,
+      activeSubMenu,
+      toggleMenu,
+      menuActive,
+      handleSelectMenu,
+      handleSelectSubMenu
     };
   }
 });

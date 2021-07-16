@@ -8,7 +8,7 @@ const homeRouter = {
   meta: {
     icon: "el-icon-s-home",
     showLink: true,
-     
+    title: "首页",
     rank: 0,
   },
   children: [
@@ -19,7 +19,7 @@ const homeRouter = {
       meta: {
         title: "首页",
         showLink: true,
-         
+        parentPath:"/"
       },
     },
   ],

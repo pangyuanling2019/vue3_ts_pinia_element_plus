@@ -23,6 +23,25 @@ const remainingRouter = [
       showLink: false,
       rank: 103,
     },
+  },
+  {
+    path: "/redirect",
+    name: "redirect",
+    component: Layout,
+    meta: {
+      icon: "el-icon-s-home",
+      title: "首页",
+      showLink: false,
+      savedPosition: false,
+      rank: 104
+    },
+    children: [
+      {
+        path: "/redirect/:path(.*)",
+        name: "redirect",
+        component: () => import("/@/views/redirect.vue")
+      }
+    ]
   }
 ];
 

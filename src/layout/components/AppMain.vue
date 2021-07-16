@@ -26,7 +26,7 @@ export default defineComponent({
 
 <style scoped>
 .app-main {
-  min-height: calc(100vh - 70px);
+  min-height: calc(100vh - 106px);
   width: 100%;
   height: 90vh;
   position: relative;

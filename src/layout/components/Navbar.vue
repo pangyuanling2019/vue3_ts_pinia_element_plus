@@ -1,17 +1,24 @@
 <template>
   <div class="navbar">
-    <Hamburger
-      :is-active="pureApp.sidebar.opened"
-      class="hamburger-container"
-      @toggleClick="toggleSideBar"
-    />
+    <div class="logo-container">
+      <div class="logo">
+        <img src="../../assets/logo-green.png" alt="logo" />
+      </div>
+      <div class="desc">
+        <span>云修维保数据管理平台</span>
+        <span>Yunxiu wei bao shu ju guan li ping tai</span>
+      </div>
+    </div>
 
     <div class="right-menu">
       <!-- 全屏 -->
-      <screenfull v-show="!deviceDetection()" />
+      <!-- <screenfull v-show="!deviceDetection()" /> -->
+      <i class="el-icon-setting hsset" title="系统设置" @click="onPanel"></i>
+      <i class="el-icon-setting hsset" title="系统设置" @click="onPanel"></i>
+      <i class="el-icon-setting hsset" title="系统设置" @click="onPanel"></i>
       <i class="el-icon-setting hsset" title="系统设置" @click="onPanel"></i>
       <!-- 退出登陆 -->
-      <el-dropdown trigger="click">
+      <!-- <el-dropdown trigger="click">
         <span class="el-dropdown-link">
           <img :src="favicon" />
           <p>{{ usename }}</p>
@@ -21,17 +28,15 @@
             <el-dropdown-item icon="el-icon-switch-button" @click="logout">退出系统</el-dropdown-item>
           </el-dropdown-menu>
         </template>
-      </el-dropdown>
+      </el-dropdown>-->
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import { ref, defineComponent, onMounted, unref, watch } from "vue";
-import Hamburger from "/@/components/HamBurger";
 import screenfull from "../components/screenfull/index.vue";
 import { useRouter, useRoute } from "vue-router";
-import { useAppStoreHook } from "/@/store/modules/app";
 import { mapGetters } from "pinia";
 import { storageSession } from "/@/utils/storage";
 import favicon from "/favicon.ico";
@@ -41,13 +46,11 @@ import { deviceDetection } from "/@/utils/deviceDetection";
 export default defineComponent({
   name: "Navbar",
   components: {
-    Hamburger,
     screenfull
   },
   setup() {
     let langs = ref(true);
 
-    const pureApp = useAppStoreHook();
     const router = useRouter();
     const route = useRoute();
 
@@ -63,10 +66,6 @@ export default defineComponent({
       emitter.emit("openPanel");
     }
 
-    function toggleSideBar() {
-      pureApp.toggleSideBar();
-    }
-
     onMounted(() => {
       document
         .querySelector(".el-dropdown__popper")
@@ -77,8 +76,6 @@ export default defineComponent({
     });
 
     return {
-      pureApp,
-      toggleSideBar,
       langs,
       usename,
       logout,
@@ -93,26 +90,47 @@ export default defineComponent({
 <style lang="scss" scoped>
 .navbar {
   width: 100%;
-  height: 50px;
+  height: 64px;
   overflow: hidden;
   background: #fff;
-  box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
+  box-shadow: 0px 2px 1px 0px rgba(33, 34, 34, 0.08);
 
-  .hamburger-container {
-    line-height: 46px;
+  .logo-container {
     height: 100%;
     float: left;
-    cursor: pointer;
-    transition: background 0.3s;
-    -webkit-tap-highlight-color: transparent;
-
-    &:hover {
-      background: rgba(0, 0, 0, 0.025);
+    margin-left: 22px;
+    display: flex;
+    .logo {
+      display: flex;
+      align-items: center;
+      width: 49px;
+      img {
+        width: 100%;
+      }
     }
-  }
-
-  .breadcrumb-container {
-    float: left;
+    .desc {
+      line-height: 64px;
+      margin-left: 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      span {
+        line-height: 1;
+      }
+      & span:first-child {
+        font-size: 18px;
+        font-weight: bold;
+        margin: 6px 0px;
+        background: linear-gradient(0deg, #1f89f1 0%, #3bb5f7 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      & span:last-child {
+        font-size: 14px;
+        font-weight: bold;
+        color: #7d7d7d;
+      }
+    }
   }
 
   .right-menu {
@@ -120,34 +138,23 @@ export default defineComponent({
     right: 0;
     display: flex;
     align-items: center;
-    height: 48px;
-    line-height: 48px;
-    .inter {
-      width: 40px;
-      height: 48px;
-      display: flex;
-      align-items: center;
-      justify-content: space-around;
-      &:hover {
-        cursor: pointer;
-        background: #f0f0f0;
-      }
-      img {
-        width: 25px;
-      }
-    }
+    height: 64px;
+    line-height: 64px;
+    margin-right: 27px;
     .hsset {
       width: 40px;
       height: 48px;
       display: flex;
       align-items: center;
       justify-content: space-around;
-      margin-right: 5px;
+      margin-right: 20px;
+      font-size: 36px;
       &:hover {
         cursor: pointer;
         background: #f0f0f0;
       }
     }
+
     .el-dropdown-link {
       width: 70px;
       display: flex;

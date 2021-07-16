@@ -175,6 +175,7 @@ export default {
     function onFresh() {
       toggleClass(true, refreshButton, document.querySelector(".rotate"));
       const { path, fullPath } = unref(route);
+      console.log(fullPath)
       router.replace({
         path: "/redirect" + fullPath
       });
@@ -240,19 +241,19 @@ export default {
           tagsViews.value[v].show = true;
         });
       }
-
+      // debugger;
       currentSelect.value = tag;
       const menuMinWidth = 105;
       const offsetLeft = unref(containerDom).getBoundingClientRect().left;
       const offsetWidth = unref(containerDom).offsetWidth;
       const maxLeft = offsetWidth - menuMinWidth;
-      const left = e.clientX - offsetLeft + 15;
+      const left = e.clientX - offsetLeft;
       if (left > maxLeft) {
         buttonLeft.value = maxLeft;
       } else {
         buttonLeft.value = left;
       }
-      buttonTop.value = e.clientY;
+      buttonTop.value = e.clientY - 45;
       visible.value = true;
     }
 
@@ -313,6 +314,7 @@ export default {
 
       emitter.on("changLayoutRoute", indexPath => {
         let currentLen = storageLocal.getItem("routesInStorage").length;
+        console.log(currentLen)
         if (currentLen === 1) {
           Array.from([1, 3]).forEach(v => {
             tagsViews.value[v].disabled = false;

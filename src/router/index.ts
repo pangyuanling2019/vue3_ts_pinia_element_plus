@@ -3,7 +3,6 @@ import { createRouter, createWebHashHistory, RouteRecordRaw } from "vue-router";
 import homeRouter from "./modules/home";
 import componentsRouter from "./modules/components";
 import systemRouter from "./modules/system";
-import nestedRouter from "./modules/nested";
 import errorRouter from "./modules/error";
 import remainingRouter from "./modules/remaining"; //静态路由
 
@@ -14,7 +13,6 @@ const constantRoutes: Array<RouteRecordRaw> = [
   homeRouter,
   componentsRouter,
   systemRouter,
-  nestedRouter,
   errorRouter,
   ...remainingRouter
 ];

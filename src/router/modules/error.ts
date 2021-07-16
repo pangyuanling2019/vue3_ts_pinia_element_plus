@@ -9,7 +9,6 @@ const errorRouter = {
     icon: "el-icon-position",
     title: "错误页面",
     showLink: false,
-     
     rank: 7,
   },
   children: [
@@ -20,7 +19,7 @@ const errorRouter = {
       meta: {
         title: "401",
         showLink: false,
-         
+        parentPath:"/error"
       },
     },
     {
@@ -30,7 +29,7 @@ const errorRouter = {
       meta: {
         title: "404",
         showLink: false,
-         
+        parentPath:"/error"
       },
     },
   ],

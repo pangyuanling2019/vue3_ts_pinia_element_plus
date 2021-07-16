@@ -10,6 +10,5 @@ export const homeRoute: RouteModel = {
     title: "首页",
     icon: "el-icon-s-home",
     showLink: true,
-     
   },
 };

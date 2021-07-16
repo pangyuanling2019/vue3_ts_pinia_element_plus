@@ -19,6 +19,7 @@ const systemRouter = {
             meta: {
                 title: "基础信息",
                 showLink: true,
+                parentPath: "/system"
             },
         },
         {
@@ -27,7 +28,8 @@ const systemRouter = {
             component: () => import("/@/views/system/dict/index.vue"),
             meta: {
                 title: "字典管理",
-                showLink: true, 
+                showLink: true,
+                parentPath: "/system"
             },
         },
     ],

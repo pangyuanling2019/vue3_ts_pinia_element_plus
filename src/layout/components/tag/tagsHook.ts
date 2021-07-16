@@ -1,5 +1,5 @@
 import { reactive, toRefs, unref, nextTick, computed } from "vue";
-import { storageLocal } from "/@/utils/storage";
+import { storageSession } from "/@/utils/storage";
 import { useRouter } from "vue-router";
 import { homeRoute } from "./type";
 
@@ -17,7 +17,6 @@ let dynamic: InterDynamic = reactive({
         title: "首页",
         icon: "el-icon-s-home",
         showLink: true,
-         
       },
     },
   ],
@@ -26,14 +25,14 @@ let dynamic: InterDynamic = reactive({
 export function useDynamicRoutesHook() {
   const router = useRouter();
   const routesLength = computed(() => {
-    return storageLocal.getItem("routesInStorage")
-      ? storageLocal.getItem("routesInStorage").length
+    return storageSession.getItem("routesInStorage")
+      ? storageSession.getItem("routesInStorage").length
       : 0;
   });
   // 返回当前路由组成的数组
   const routesStorageLists = computed(() => {
-    return storageLocal.getItem("routesInStorage")
-      ? storageLocal.getItem("routesInStorage")
+    return storageSession.getItem("routesInStorage")
+      ? storageSession.getItem("routesInStorage")
       : [];
   });
   /**
@@ -45,6 +44,7 @@ export function useDynamicRoutesHook() {
     parentPath: string,
     route: any
   ): void => {
+    // console.log(value, parentPath, route)
     nextTick(() => {
       if (unref(routesStorageLists).length > 2) {
         dynamic.dRoutes = unref(routesStorageLists);
@@ -56,14 +56,15 @@ export function useDynamicRoutesHook() {
       return item.path === value;
     });
 
+    //tag 没有的话push一个
     if (route) {
-      let ramStorage = storageLocal.getItem("routesInStorage");
+      let ramStorage = storageSession.getItem("routesInStorage");
       nextTick(() => {
         if (ramStorage) {
           let currentIndex = ramStorage.findIndex((v) => v.path === route.path);
           if (currentIndex !== -1) return;
           ramStorage.push({ path: route.path, meta: route.meta });
-          storageLocal.setItem("routesInStorage", ramStorage);
+          storageSession.setItem("routesInStorage", ramStorage);
         }
       });
     }
@@ -76,7 +77,7 @@ export function useDynamicRoutesHook() {
             dynamic.dRoutes.push({ path: value, meta: arrItem.meta });
 
             unref(routesLength) === 0
-              ? storageLocal.setItem("routesInStorage", dynamic.dRoutes)
+              ? storageSession.setItem("routesInStorage", dynamic.dRoutes)
               : [];
           } else {
             if (arrItem.children && arrItem.children.length > 0) {
@@ -98,7 +99,7 @@ export function useDynamicRoutesHook() {
     });
     // 从当前匹配到的路径中删除
     await dynamic.dRoutes.splice(valueIndex, 1);
-    storageLocal.setItem("routesInStorage", dynamic.dRoutes);
+    storageSession.setItem("routesInStorage", dynamic.dRoutes);
     if (current === obj.path) {
       // 如果删除当前激活tag就自动切换到最后一个tag
       let newRoute: any = dynamic.dRoutes.slice(-1);

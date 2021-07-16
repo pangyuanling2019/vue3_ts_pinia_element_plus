@@ -1,16 +1,11 @@
 <template>
   <div :class="classes" class="app-wrapper">
-    <div
-      v-if="device === 'mobile' && sidebar.opened"
-      class="drawer-bg"
-      @click="handleClickOutside(false)"
-    />
+    <!-- 顶部导航栏 -->
+    <navbar v-show="!containerHiddenSideBar" />
     <!-- 侧边栏 -->
     <sidebar class="sidebar-container" v-if="!containerHiddenSideBar" />
-    <div class="main-container">
+    <div class="main-container" :style="{marginLeft:collapsed?'226px':'70px'}">
       <div :class="{ 'fixed-header': fixedHeader }">
-        <!-- 顶部导航栏 -->
-        <navbar v-show="!containerHiddenSideBar" />
         <!-- tabs标签页 -->
         <tag>
           <i
@@ -42,21 +37,13 @@ import {
   onBeforeMount,
   onBeforeUnmount
 } from "vue";
-import { useAppStoreHook } from "/@/store/modules/app";
+import { useGlobalModel } from "/@/store/modules/globalModel";
 import { useSettingStoreHook } from "/@/store/modules/settings";
 import { useEventListener, useFullscreen } from "@vueuse/core";
 import { toggleClass, removeClass } from "/@/utils/operate";
 let hiddenMainContainer = "hidden-main-container";
 import options from "/@/settings";
 import { useRouter, useRoute } from "vue-router";
-import { storageLocal } from "/@/utils/storage";
-
-interface setInter {
-  sidebar: any;
-  device: String;
-  fixedHeader: Boolean;
-  classes: any;
-}
 
 export default {
   name: "layout",
@@ -68,63 +55,14 @@ export default {
     tag
   },
   setup() {
-    const pureApp = useAppStoreHook();
+    const globalModel = useGlobalModel();
+
     const pureSetting = useSettingStoreHook();
 
     const router = useRouter();
     const route = useRoute();
 
-    const WIDTH = ref(992);
-
     let containerHiddenSideBar = ref(options.hiddenSideBar);
-
-    const set: setInter = reactive({
-      sidebar: computed(() => {
-        return pureApp.sidebar;
-      }),
-
-      device: computed(() => {
-        return pureApp.device;
-      }),
-
-      fixedHeader: computed(() => {
-        return pureSetting.fixedHeader;
-      }),
-
-      classes: computed(() => {
-        return {
-          hideSidebar: !set.sidebar.opened,
-          openSidebar: set.sidebar.opened,
-          withoutAnimation: set.sidebar.withoutAnimation,
-          mobile: set.device === "mobile"
-        };
-      })
-    });
-
-    const handleClickOutside = (params: Boolean) => {
-      pureApp.closeSideBar({ withoutAnimation: params });
-    };
-
-    watchEffect(() => {
-      if (set.device === "mobile" && !set.sidebar.opened) {
-        handleClickOutside(false);
-      }
-    });
-
-    const $_isMobile = () => {
-      const rect = document.body.getBoundingClientRect();
-      return rect.width - 1 < WIDTH.value;
-    };
-
-    const $_resizeHandler = () => {
-      if (!document.hidden) {
-        const isMobile = $_isMobile();
-        pureApp.toggleDevice(isMobile ? "mobile" : "desktop");
-        if (isMobile) {
-          handleClickOutside(true);
-        }
-      }
-    };
 
     function onFullScreen() {
       if (unref(containerHiddenSideBar)) {
@@ -145,11 +83,6 @@ export default {
     }
 
     onMounted(() => {
-      const isMobile = $_isMobile();
-      if (isMobile) {
-        pureApp.toggleDevice("mobile");
-        handleClickOutside(true);
-      }
       toggleClass(
         unref(containerHiddenSideBar),
         hiddenMainContainer,
@@ -157,13 +90,8 @@ export default {
       );
     });
 
-    onBeforeMount(() => {
-      useEventListener("resize", $_resizeHandler);
-    });
-
     return {
-      ...toRefs(set),
-      handleClickOutside,
+      collapsed: computed(() => globalModel.collapsed),
       containerHiddenSideBar,
       onFullScreen
     };
