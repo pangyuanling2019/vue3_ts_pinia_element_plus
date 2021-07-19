@@ -32,18 +32,6 @@
         <vxe-switch v-model="tagsVal" open-label="开" close-label="关" @change="tagsChange"></vxe-switch>
       </li>
       <li>
-        <span>侧边栏Logo</span>
-        <vxe-switch
-          v-model="logoVal"
-          open-value="1"
-          close-value="-1"
-          open-label="开"
-          close-label="关"
-          @change="logoChange"
-        ></vxe-switch>
-      </li>
-
-      <li>
         <span>标签风格</span>
         <vxe-radio-group v-model="markValue" @change="onChange">
           <vxe-radio label="card" content="卡片"></vxe-radio>
@@ -178,13 +166,6 @@ export default {
       toggleClass(true, isSelect, unref(secondTheme));
     }
 
-    function logoChange() {
-      unref(logoVal) === "1"
-        ? storageLocal.setItem("logoVal", "1")
-        : storageLocal.setItem("logoVal", "-1");
-      emitter.emit("logoChange", unref(logoVal));
-    }
-
     return {
       ...toRefs(settings),
       localOperate,
@@ -197,8 +178,7 @@ export default {
       onDark,
       onLight,
       dataTheme,
-      logoVal,
-      logoChange
+      logoVal
     };
   }
 };

@@ -1,26 +1,15 @@
 <template>
   <div ref="containerDom" class="tags-view" v-if="!showTags">
-    <el-scrollbar wrap-class="scrollbar-wrapper" class="scroll-container">
+    <el-scrollbar wrap-class="scrollbar-wrapper" class="scroll-container" view-class="scroll-view">
       <div
         v-for="(item, index) in dynamicTagList"
         :key="index"
         :ref="'dynamic' + index"
-        :class="['scroll-item', $route.path === item.path ? 'is-active' : '', $route.path === item.path && showModel ==='card'  ? 'card-active' : '' ]"
+        :class="['scroll-item', $route.path === item.path   ? 'card-active' : '' ]"
         @contextmenu.prevent.native="openMenu(item, $event)"
-        @mouseenter.prevent="onMouseenter(item, index)"
-        @mouseleave.prevent="onMouseleave(item, index)"
       >
         <router-link :to="item.path">{{ item.meta.title }}</router-link>
-        <i
-          v-if="$route.path === item.path && index !== 0 || index === activeIndex && index !== 0"
-          class="iconfont team-iconshanchu"
-          @click="deleteMenu(item)"
-        ></i>
-        <div
-          :ref="'schedule' + index"
-          v-if="showModel !=='card'"
-          :class="[$route.path === item.path ? 'schedule-active' : '']"
-        ></div>
+        <i v-if="index !== 0" class="iconfont team-iconshanchu" @click="deleteMenu(item)"></i>
       </div>
     </el-scrollbar>
     <!-- 右键菜单按钮 -->
@@ -41,11 +30,7 @@
     <!-- 右侧功能按钮 -->
     <ul class="right-button">
       <li>
-        <i
-          title="刷新路由"
-          class="el-icon-refresh-right rotate"
-          @click="onFresh"
-        ></i>
+        <i title="刷新路由" class="el-icon-refresh-right rotate" @click="onFresh"></i>
       </li>
       <li>
         <el-dropdown trigger="click" placement="bottom-end">
@@ -175,7 +160,7 @@ export default {
     function onFresh() {
       toggleClass(true, refreshButton, document.querySelector(".rotate"));
       const { path, fullPath } = unref(route);
-      console.log(fullPath)
+      console.log(fullPath);
       router.replace({
         path: "/redirect" + fullPath
       });
@@ -272,49 +257,12 @@ export default {
       }
     );
 
-    // 鼠标移入
-    function onMouseenter(item, index) {
-      if (index) activeIndex.value = index;
-      if (unref(showModel) === "smart") {
-        if (hasClass(vm.refs["schedule" + index], "schedule-active")) return;
-        toggleClass(true, "schedule-in", vm.refs["schedule" + index]);
-        toggleClass(false, "schedule-out", vm.refs["schedule" + index]);
-      } else {
-        if (hasClass(vm.refs["dynamic" + index], "card-active")) return;
-        toggleClass(true, "card-in", vm.refs["dynamic" + index]);
-        toggleClass(false, "card-out", vm.refs["dynamic" + index]);
-      }
-    }
-
-    // 鼠标移出
-    function onMouseleave(item, index) {
-      activeIndex.value = -1;
-      if (unref(showModel) === "smart") {
-        if (hasClass(vm.refs["schedule" + index], "schedule-active")) return;
-        toggleClass(false, "schedule-in", vm.refs["schedule" + index]);
-        toggleClass(true, "schedule-out", vm.refs["schedule" + index]);
-      } else {
-        if (hasClass(vm.refs["dynamic" + index], "card-active")) return;
-        toggleClass(false, "card-in", vm.refs["dynamic" + index]);
-        toggleClass(true, "card-out", vm.refs["dynamic" + index]);
-      }
-    }
-
     onBeforeMount(() => {
       vm = getCurrentInstance();
 
-      emitter.on("tagViewsChange", key => {
-        if (unref(showTags) === key) return;
-        showTags.value = key;
-      });
-
-      emitter.on("tagViewsShowModel", key => {
-        showModel.value = key;
-      });
-
       emitter.on("changLayoutRoute", indexPath => {
         let currentLen = storageLocal.getItem("routesInStorage").length;
-        console.log(currentLen)
+        console.log(currentLen);
         if (currentLen === 1) {
           Array.from([1, 3]).forEach(v => {
             tagsViews.value[v].disabled = false;
@@ -342,8 +290,6 @@ export default {
       closeMenu,
       selectTag,
       currentSelect,
-      onMouseenter,
-      onMouseleave,
       activeIndex,
       showModel
     };
@@ -356,15 +302,13 @@ export default {
   width: 100%;
   font-size: 14px;
   display: flex;
-  box-shadow: 0 0 1px #888888;
   .scroll-item {
-    border-radius: 3px 3px 0 0;
-    padding: 2px 8px;
-    display: inline-block;
     position: relative;
-    margin-right: 5px;
-    height: 28px;
-    line-height: 25px;
+    border-right: 1px solid #e5e5e5;
+    padding: 0px 24px;
+    display: inline-block;
+    height: 100%;
+    line-height: 34px;
     &:hover {
       background-color: #eaf4fe;
     }
@@ -372,20 +316,35 @@ export default {
   a {
     text-decoration: none;
     color: #666;
-    padding: 0 4px 0 4px;
+    padding: 10px;
+  }
+
+  // 卡片模式
+  .card-active::after {
+    position: absolute;
+    top: -1px;
+    left: 0;
+    content: " ";
+    width: 100%;
+    height: 2px;
+    background-color: #218df1;
+    border-radius: 2px;
+  }
+  .card-active::before {
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    content: " ";
+    width: 100%;
+    height: 1px;
+    background-color: #fff;
   }
 
   .scroll-container {
-    padding: 5px 0;
     white-space: nowrap;
     position: relative;
     width: 100%;
     background: #fff;
-    .scroll-item {
-      &:nth-child(1) {
-        margin-left: 5px;
-      }
-    }
 
     .scrollbar-wrapper {
       position: absolute;
@@ -423,10 +382,11 @@ export default {
   font-size: 16px;
   li {
     width: 40px;
-    height: 38px;
-    line-height: 38px;
+    height: 36px;
+    line-height: 36px;
     text-align: center;
-    border-right: 1px solid #ccc;
+    border: 1px solid #e5e5e5;
+    border-left: none;
     cursor: pointer;
   }
 }
@@ -447,94 +407,17 @@ export default {
   margin-right: 10px;
 }
 
-.is-active {
-  background-color: #eaf4fe;
-  position: relative;
-  color: #fff;
-  a {
-    color: #1890ff;
-  }
-}
-
 // 关闭图标
 .team-iconshanchu {
-  color: #1890ff;
+  margin-left: 9px;
   cursor: pointer;
   font-size: 14px;
-  transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
-}
-.team-iconshanchu:hover {
   border-radius: 50%;
   color: #fff;
-  background: #b4bccc;
+  background: #eb3941;
+  transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
 }
 
-// 卡片模式
-.card-active {
-  border: 1px solid #1890ff;
-}
-// 卡片模式下鼠标移入显示蓝色边框
-.card-in {
-  border: 1px solid #1890ff;
-  color: #1890ff;
-  a {
-    color: #1890ff;
-  }
-}
-// 卡片模式下鼠标移出隐藏蓝色边框
-.card-out {
-  border: none;
-  color: #666;
-  a {
-    color: #666;
-  }
-}
-
-// 灵动模式
-.schedule-active {
-  width: 100%;
-  height: 2px;
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  background: #1890ff;
-}
-// 灵动模式下鼠标移入显示蓝色进度条
-.schedule-in {
-  width: 100%;
-  height: 2px;
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  background: #1890ff;
-  animation: scheduleInWidth 400ms ease-in;
-}
-@keyframes scheduleInWidth {
-  from {
-    width: 0px;
-  }
-  to {
-    width: 100%;
-  }
-}
-// 灵动模式下鼠标移出隐藏蓝色进度条
-.schedule-out {
-  width: 0;
-  height: 2px;
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  background: #1890ff;
-  animation: scheduleOutWidth 400ms ease-in;
-}
-@keyframes scheduleOutWidth {
-  from {
-    width: 100%;
-  }
-  to {
-    width: 0;
-  }
-}
 // 刷新按钮动画效果
 .refresh-button {
   -webkit-transition-property: -webkit-transform;
