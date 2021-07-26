@@ -9,7 +9,7 @@ const componentsRouter = {
     icon: "el-icon-menu",
     title: "组件",
     showLink: true,
-    rank: 4,
+    rank: 405,
   },
   children: [
     {

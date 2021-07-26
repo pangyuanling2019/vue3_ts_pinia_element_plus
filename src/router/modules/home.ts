@@ -6,10 +6,10 @@ const homeRouter = {
   component: Layout,
   redirect: "/home",
   meta: {
-    icon: "el-icon-s-home",
+    icon: "icon-home",
     showLink: true,
     title: "首页",
-    rank: 0,
+    rank: 1,
   },
   children: [
     {

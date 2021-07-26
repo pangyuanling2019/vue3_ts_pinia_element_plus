@@ -1,20 +1,35 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from "vue-router";
 
 import homeRouter from "./modules/home";
+import purchaseRouter from "./modules/purchase";
+import saleRouter from "./modules/sale";
+import repairRouter from "./modules/repair";
+import stockRouter from "./modules/stock";
+import baseRouter from "./modules/base";
+import settingsRouter from "./modules/settings";
+import errorRouter from "./modules/error";  //错误路由
+import remainingRouter from "./modules/remaining"; //静态路由
+
 import componentsRouter from "./modules/components";
 import systemRouter from "./modules/system";
-import errorRouter from "./modules/error";
-import remainingRouter from "./modules/remaining"; //静态路由
+
 
 import { storageSession } from "../utils/storage";
 import NProgress from "../utils/progress";
 
 const constantRoutes: Array<RouteRecordRaw> = [
   homeRouter,
-  componentsRouter,
-  systemRouter,
+  purchaseRouter,
+  saleRouter,
+  repairRouter,
+  stockRouter,
+  baseRouter,
+  settingsRouter,
   errorRouter,
-  ...remainingRouter
+  ...remainingRouter,
+
+  // componentsRouter,
+  // systemRouter,
 ];
 
 // 按照路由中meta下的rank等级升序来排序路由
@@ -32,7 +47,6 @@ const router = createRouter({
   routes: constantRoutesArr
 });
 
-console.log(router, constantRoutesArr)
 
 const whiteList = ["/login"];
 

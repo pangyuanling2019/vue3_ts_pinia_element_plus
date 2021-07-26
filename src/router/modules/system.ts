@@ -9,7 +9,7 @@ const systemRouter = {
         icon: "el-icon-setting",
         title: "系统管理",
         showLink: true,
-        rank: 6,
+        rank: 888,
     },
     children: [
         {

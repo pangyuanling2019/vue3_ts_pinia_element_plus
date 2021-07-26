@@ -1,7 +1,7 @@
 import { createApp } from "vue";
 import App from "./App.vue";
 import router from "./router";
-import { store } from "/@/store";
+import { createPinia } from "pinia";
 import { useElementPlus } from "../src/plugins/element-plus";
 import { useTable } from "../src/plugins/vxe-table";
 
@@ -12,7 +12,9 @@ import "./assets/iconfont/iconfont.js";
 import "./assets/iconfont/iconfont.css";
 
 
+
 const app = createApp(App);
+const store = createPinia();
 
 app.use(router).use(store).use(useElementPlus).use(useTable).mount("#app");
 

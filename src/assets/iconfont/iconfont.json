@@ -1,44 +1,170 @@
 {
-  "id": "2208059",
-  "name": "CURD-TS",
+  "id": "2543587",
+  "name": "云修-对外",
   "font_family": "iconfont",
-  "css_prefix_text": "team-icon",
-  "description": "增删查改xi't",
+  "css_prefix_text": "icon-",
+  "description": "",
   "glyphs": [
     {
-      "icon_id": "6184565",
-      "name": "删除",
-      "font_class": "shanchu",
+      "icon_id": "1911536",
+      "name": "头像 女孩",
+      "font_class": "icon-test-copy",
+      "unicode": "e678",
+      "unicode_decimal": 59000
+    },
+    {
+      "icon_id": "7069166",
+      "name": "刷新",
+      "font_class": "el-icon-refresh-right",
+      "unicode": "e73a",
+      "unicode_decimal": 59194
+    },
+    {
+      "icon_id": "1725615",
+      "name": "缩小",
+      "font_class": "team-iconshow-main-container",
       "unicode": "e617",
       "unicode_decimal": 58903
     },
     {
       "icon_id": "9626913",
       "name": "全屏",
-      "font_class": "show-main-container",
+      "font_class": "team-iconhidden-main-container",
       "unicode": "e878",
       "unicode_decimal": 59512
     },
     {
-      "icon_id": "9626952",
-      "name": "退出全屏",
-      "font_class": "hidden-main-container",
-      "unicode": "e881",
-      "unicode_decimal": 59521
+      "icon_id": "10588411",
+      "name": "下拉",
+      "font_class": "xiala1",
+      "unicode": "e648",
+      "unicode_decimal": 58952
     },
     {
-      "icon_id": "5698509",
-      "name": "全屏缩小",
-      "font_class": "exit-fullscreen",
-      "unicode": "e62a",
-      "unicode_decimal": 58922
+      "icon_id": "20719694",
+      "name": "关闭",
+      "font_class": "guanbi",
+      "unicode": "e603",
+      "unicode_decimal": 58883
     },
     {
-      "icon_id": "5698510",
-      "name": "全屏显示",
-      "font_class": "fullscreen",
+      "icon_id": "5151000",
+      "name": "退出",
+      "font_class": "tuichu",
+      "unicode": "e669",
+      "unicode_decimal": 58985
+    },
+    {
+      "icon_id": "14310223",
+      "name": "上拉",
+      "font_class": "shangla",
       "unicode": "e62b",
       "unicode_decimal": 58923
+    },
+    {
+      "icon_id": "14310229",
+      "name": "下拉",
+      "font_class": "xiala",
+      "unicode": "e62e",
+      "unicode_decimal": 58926
+    },
+    {
+      "icon_id": "14458284",
+      "name": "基础数据",
+      "font_class": "jichushuju",
+      "unicode": "e609",
+      "unicode_decimal": 58889
+    },
+    {
+      "icon_id": "4511762",
+      "name": "关于",
+      "font_class": "guanyu",
+      "unicode": "e633",
+      "unicode_decimal": 58931
+    },
+    {
+      "icon_id": "14015759",
+      "name": "-_仓库6",
+      "font_class": "-_cangku",
+      "unicode": "e62d",
+      "unicode_decimal": 58925
+    },
+    {
+      "icon_id": "774445",
+      "name": "报表",
+      "font_class": "baobiao",
+      "unicode": "e65d",
+      "unicode_decimal": 58973
+    },
+    {
+      "icon_id": "16178661",
+      "name": "销售订单",
+      "font_class": "xiaoshoudingdan1",
+      "unicode": "e600",
+      "unicode_decimal": 58880
+    },
+    {
+      "icon_id": "17622784",
+      "name": "采购管理",
+      "font_class": "guanli",
+      "unicode": "e796",
+      "unicode_decimal": 59286
+    },
+    {
+      "icon_id": "1042863",
+      "name": "首页",
+      "font_class": "home",
+      "unicode": "e638",
+      "unicode_decimal": 58936
+    },
+    {
+      "icon_id": "4272338",
+      "name": "维修",
+      "font_class": "weixiu",
+      "unicode": "e684",
+      "unicode_decimal": 59012
+    },
+    {
+      "icon_id": "8861979",
+      "name": "房屋维修",
+      "font_class": "fangwuweixiu",
+      "unicode": "e627",
+      "unicode_decimal": 58919
+    },
+    {
+      "icon_id": "16376882",
+      "name": "首页",
+      "font_class": "biaoqianA01_shouye-11",
+      "unicode": "ea94",
+      "unicode_decimal": 60052
+    },
+    {
+      "icon_id": "9839027",
+      "name": "搜索",
+      "font_class": "sousuo",
+      "unicode": "e6d9",
+      "unicode_decimal": 59097
+    },
+    {
+      "icon_id": "14433069",
+      "name": "设置",
+      "font_class": "shezhi",
+      "unicode": "e7f2",
+      "unicode_decimal": 59378
+    },
+    {
+      "icon_id": "20417700",
+      "name": "皮肤",
+      "font_class": "pifu",
+      "unicode": "f2ee",
+      "unicode_decimal": 62190
+    },
+    {
+      "icon_id": "20417683",
+      "name": "计算器",
+      "font_class": "jisuanqi1",
+      "unicode": "f2dd",
+      "unicode_decimal": 62173
     }
   ]
 }

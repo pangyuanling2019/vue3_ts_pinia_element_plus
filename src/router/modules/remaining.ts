@@ -8,7 +8,7 @@ const remainingRouter = [
     meta: {
       title: "登陆",
       showLink: false,
-      rank: 101,
+      rank: 0,
     },
   },
   {
@@ -21,7 +21,7 @@ const remainingRouter = [
       icon: "el-icon-s-home",
       title: "首页",
       showLink: false,
-      rank: 103,
+      rank: 400,
     },
   },
   {
